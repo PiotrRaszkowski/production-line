@@ -17,7 +17,7 @@ pipeline {
                     git(
                        url: 'CHANGE_GIT_URL',
                        credentialsId: 'CHANGE_GITLAB_CREDENTIALS',
-                       branch: 'master'
+                       branch: 'develop'
                     )
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
                     ansiColor('xterm') {
                         script {
                             try {
-                                sh "mvn clean install -Pcode-coverage"
+                                sh "mvn clean install -Pcode-coverage findbugs:findbugs"
                             }catch(error){
                                 junit '**/target/*-reports/*.xml'
                             }
@@ -65,5 +65,11 @@ pipeline {
                     }
             }
         }
+        
+        stage('Results') {
+			steps {
+			  findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '**/CHANGE_YOUR_PACKAGE/**', pattern: '**/target/findbugsXml.xml', unHealthy: ''
+			}
+	   }
     }
 }

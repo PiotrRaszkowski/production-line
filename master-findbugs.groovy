@@ -7,7 +7,6 @@ pipeline {
     }
     
     options{
-       //gitlabBuilds(builds: ["Preparation","Build", "Results"])    
        gitLabConnection('gitlab')
     }
     
@@ -16,8 +15,8 @@ pipeline {
             steps {
                 script {
                     git(
-                       url: 'http://gitlab/root/spring-hello-world.git',
-                       credentialsId: 'gitlab-https',
+                       url: 'CHANGE_GIT_URL',
+                       credentialsId: 'CHANGE_GITLAB_CREDENTIALS',
                        branch: 'master'
                     )
                 }
@@ -42,7 +41,7 @@ pipeline {
         
         stage('Results') {
 			steps {
-			  findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '**/pl.raszkowski.example/**', pattern: '**/target/findbugsXml.xml', unHealthy: ''
+			  findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '**/CHANGE_YOUR_PACKAGE/**', pattern: '**/target/findbugsXml.xml', unHealthy: ''
 			}
 	   }
     }

@@ -45,7 +45,7 @@ pipeline {
                         ansiColor('xterm') {
                             script {
                                 try {
-                                    sh "mvn clean install findbugs:findbugs"
+                                    sh "mvn clean install"
                                 }catch(error){
                                     currentBuild.result = 'FAILURE' 
                                     throw error
@@ -56,12 +56,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('FindBugs') {
-            steps {
-               findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '**/CHANGE_YOUR_PACKAGE/**', pattern: '**/target/findbugsXml.xml', unHealthy: ''
-            }
-	   }
     }
     
     post {
